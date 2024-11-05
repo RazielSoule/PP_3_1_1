@@ -1,7 +1,7 @@
-package hiber.service;
+package com.katalearn.SpringBoot.service;
 
-import hiber.dao.UserDao;
-import hiber.model.User;
+import com.katalearn.SpringBoot.model.User;
+import com.katalearn.SpringBoot.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -12,38 +12,39 @@ import java.util.List;
 @Transactional(readOnly = true)
 public class UserServiceImp implements UserService {
 
-   private final UserDao userDao;
+   private final UserRepository userRepository;
 
    @Autowired
-   public UserServiceImp(UserDao userDao) {
-      this.userDao = userDao;
+   public UserServiceImp(UserRepository userRepository) {
+      this.userRepository = userRepository;
    }
 
    @Transactional
    @Override
    public void addUser(User user) {
-      userDao.add(user);
+      userRepository.save(user);
    }
 
    @Override
    public List<User> getUsers() {
-      return userDao.findAll();
+      return userRepository.findAll();
    }
 
    @Override
    public User getUser(int id) {
-      return userDao.findById(id);
+      return userRepository.findById(id).orElse(null);
    }
 
    @Transactional
    @Override
    public void deleteUser(int id) {
-      userDao.delete(userDao.findById(id));
+      userRepository.deleteById(id);
    }
 
    @Transactional
    @Override
-   public void updateUser(User user) {
-      userDao.update(user);
+   public void updateUser(int id, User user) {
+      user.setId((long) id);
+      userRepository.save(user);
    }
 }

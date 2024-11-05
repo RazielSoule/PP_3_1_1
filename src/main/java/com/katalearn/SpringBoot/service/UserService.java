@@ -1,6 +1,6 @@
-package hiber.service;
+package com.katalearn.SpringBoot.service;
 
-import hiber.model.User;
+import com.katalearn.SpringBoot.model.User;
 
 import java.util.List;
 
@@ -9,5 +9,5 @@ public interface UserService {
     List<User> getUsers();
     User getUser(int id);
     void deleteUser(int id);
-    void updateUser(User user);
+    void updateUser(int id, User user);
 }

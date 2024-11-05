@@ -8,7 +8,7 @@
 
 <div th:each="user : ${usersList}">
     <a th:text="${user.getFirstName() + ', ' + user.getLastName() + ', ' + user.getEmail()}"/>
-    <button th:onclick="|window.location.href='/spring_mvc_war_exploded/edit-user?id=${user.getId()}'|">Edit user</button>
+    <button th:onclick="|window.location.href='/edit-user?id=${user.getId()}'|">Edit user</button>
     <form th:method="POST" th:action="@{/delete-user(id=${user.getId()})}">
         <input style="color:red" type="submit" value="Delete user">
     </form>
@@ -17,7 +17,7 @@
 <br/>
 <hr/>
 
-<button th:onclick="|window.location.href='/spring_mvc_war_exploded/add-user'|">New user</button>
+<button th:onclick="|window.location.href='/add-user'|">New user</button>
 
 </body>
 </html>

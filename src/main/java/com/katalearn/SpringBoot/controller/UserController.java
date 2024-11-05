@@ -1,7 +1,7 @@
-package hiber.controller;
+package com.katalearn.SpringBoot.controller;
 
-import hiber.model.User;
-import hiber.service.UserService;
+import com.katalearn.SpringBoot.model.User;
+import com.katalearn.SpringBoot.service.UserService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -46,16 +46,17 @@ public class UserController {
 
     @GetMapping(value = "/edit-user")
     public String editUser(@RequestParam(value = "id") int id, ModelMap model){
+        model.addAttribute("UserId", id);
         model.addAttribute("user", userService.getUser(id));
         return "edit-user";
     }
 
-    @PostMapping(value = "/edit-user")
-    public String editUser(@ModelAttribute("user") @Valid User user, BindingResult result) {
+    @PostMapping(value = "/edit-user-{id}")
+    public String editUser(@PathVariable(value = "id") int id, @ModelAttribute("user") @Valid User user, BindingResult result) {
         if (result.hasErrors()) {
             return "edit-user";
         }
-        userService.updateUser(user);
+        userService.updateUser(id, user);
         return "redirect:/users";
     }
 
